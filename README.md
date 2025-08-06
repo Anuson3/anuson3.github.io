@@ -1,4 +1,4 @@
-<!<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="th">
 <head>
   <meta charset="UTF-8">
@@ -8,11 +8,12 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100
+      height: 100vh;
       background-color: #f9f9f9;
       font-family: 'Kanit', sans-serif;
-      font-size: 3
+      font-size: 3rem;
       color: #333;
+      margin: 0;
     }
   </style>
 </head>
