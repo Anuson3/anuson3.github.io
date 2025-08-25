@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>พี่ชอบผมไหม?</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f3f6fc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+        h1 {
+            color: #333;
+        }
+        textarea {
+            width: 300px;
+            height: 100px;
+            padding: 10px;
+            margin-top: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            resize: none;
+            font-size: 16px;
+        }
+        button {
+            margin-top: 15px;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #status {
+            margin-top: 15px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>พี่ชอบผมไหม?</h1>
+    <textarea id="message" placeholder="พิมพ์ข้อความของคุณที่นี่..." required></textarea><br>
+    <button id="sendBtn">ส่งข้อความ</button>
+    <p id="status"></p>
+
+    <!-- EmailJS SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+    <script>
+        // ✅ ใส่ Public Key ของคุณตรงนี้
+        emailjs.init("YOUR_PUBLIC_KEY");
+
+        document.getElementById("sendBtn").addEventListener("click", function() {
+            const msg = document.getElementById("message").value;
+            if (msg.trim() === "") {
+                document.getElementById("status").innerText = "กรุณากรอกข้อความก่อน!";
+                return;
+            }
+
+            emailjs.send("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", {
+                to_email: "tanusonmakkamim@gmail.com",  // ใส่อีเมลของคุณ
+                message: msg
+            }).then(() => {
+                document.getElementById("status").innerText = "✅ ส่งข้อความเรียบร้อยแล้ว!";
+                document.getElementById("message").value = "";
+            }).catch((error) => {
+                document.getElementById("status").innerText = "❌ เกิดข้อผิดพลาด! โปรดลองอีกครั้ง";
+                console.error(error);
+            });
+        });
+    </script>
+</body>
+  </html>
