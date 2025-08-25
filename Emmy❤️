@@ -1,107 +1,86 @@
-<!DOCTYPE html>
+                <!DOCTYPE html>
 <html lang="th">
 <head>
     <meta charset="UTF-8">
-    <title>รักนะครับ Emmy</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>พี่ชอบผมไหม?</title>
     <style>
         body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #ff9a9e, #fad0c4);
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #fff0f5;
-            font-family: 'Kanit', sans-serif;
-            font-size: 2rem;
-            color: #333;
+            flex-direction: column;
             margin: 0;
-            overflow: hidden;
         }
-
-        img {
-            max-width: 70%;
-            height: auto;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-            margin-bottom: 20px;
-            animation: fadeIn 1.5s ease-in-out;
-        }
-
-        p {
-            margin-bottom: 15px;
-            color: #ff2e55;
-            font-size: 2rem;
-            animation: fadeIn 2s ease-in-out;
-        }
-
-        a {
-            padding: 12px 25px;
-            background-color: #ff4d6d;
+        h1 {
             color: white;
-            text-decoration: none;
-            border-radius: 15px;
-            font-size: 1.3rem;
+            font-size: 28px;
+            margin-bottom: 15px;
+        }
+        textarea {
+            width: 300px;
+            height: 100px;
+            padding: 10px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 10px;
+            resize: none;
+            font-size: 16px;
+        }
+        button {
+            margin-top: 15px;
+            padding: 10px 20px;
+            background-color: #ff4b5c;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
             transition: 0.3s;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            animation: fadeIn 2.5s ease-in-out;
         }
-
-        a:hover {
-            background-color: #ff2e55;
-            transform: scale(1.05);
+        button:hover {
+            background-color: #ff1e42;
         }
-
-        /* เอฟเฟกต์หัวใจลอย */
-        .heart {
-            position: fixed;
-            bottom: 20px;
-            font-size: 30px;
-            color: #ff4d6d;
-            animation: floatUp 4s linear forwards;
-            opacity: 0.8;
-        }
-
-        @keyframes floatUp {
-            0% {
-                transform: translateY(0) scale(1);
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(-100vh) scale(1.5);
-                opacity: 0;
-            }
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        #status {
+            margin-top: 15px;
+            font-weight: bold;
+            color: white;
         }
     </style>
 </head>
 <body>
-    <p>สำหรับ Emmy 💖</p>
-    <img src="https://i.imgur.com/jb5DgmB.jpg" alt="Emmy">
-    <a href="#" onclick="showLove()">กดที่นี่สิ</a>
+    <h1>พี่ชอบผมไหม? 💌</h1>
+    <textarea id="message" placeholder="พิมพ์ข้อความของคุณที่นี่..." required></textarea><br>
+    <button id="sendBtn">ส่งข้อความ</button>
+    <p id="status"></p>
 
+    <!-- EmailJS SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
     <script>
-        function showLove() {
-            alert('รักนะครับ Emmy ❤️');
-            for (let i = 0; i < 15; i++) {
-                createHeart();
+        // ใส่ Public Key ของคุณ
+        emailjs.init("TOraiZrWL7W84SCn4");
+
+        document.getElementById("sendBtn").addEventListener("click", function() {
+            const msg = document.getElementById("message").value;
+            if (msg.trim() === "") {
+                document.getElementById("status").innerText = "⚠️ กรุณากรอกข้อความก่อน!";
+                return;
             }
-        }
 
-        function createHeart() {
-            const heart = document.createElement('div');
-            heart.classList.add('heart');
-            heart.innerText = '❤️';
-            heart.style.left = Math.random() * window.innerWidth + 'px';
-            document.body.appendChild(heart);
-
-            setTimeout(() => {
-                heart.remove();
-            }, 4000);
-        }
+            emailjs.send("service_mr84ei7", "template_u0ejxps", {
+                to_email: "tanusonmakkamim@gmail.com",
+                message: msg
+            }).then(() => {
+                document.getElementById("status").innerText = "✅ ส่งข้อความเรียบร้อยแล้ว!";
+                document.getElementById("message").value = "";
+            }).catch((error) => {
+                document.getElementById("status").innerText = "❌ เกิดข้อผิดพลาด! โปรดลองอีกครั้ง";
+                console.error(error);
+            });
+        });
     </script>
 </body>
 </html>
